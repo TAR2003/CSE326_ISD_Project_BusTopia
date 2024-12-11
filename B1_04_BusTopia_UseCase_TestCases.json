@@ -1,0 +1,2141 @@
+[
+    {
+        "usecase": {
+            "name": "Viewing bus information with bus name and bus no",
+            "scenario": "Passenger enters bus name and the bus no to find the ",
+            "actors": "Passenger, System",
+            "preconditions": "Passenger is logged in in the application, and the bus service is registered in the application.",
+            "steps": [
+                "Passenger enters a bus name and the bus no.",
+                "Passenger submits the request.",
+                "Passenger gets the information about the specific bus service."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Valid Bus Query",
+                "description": "Verify that when a passenger enters a valid bus name and number that is registered in the application, the information is showed.",
+                "input": {
+                    "selectedBusName": "Shyamoli",
+                    "selectedBusNo": "A23"
+                },
+                "expected": {
+                    "outcome": "Bus information page is displayed",
+                    "status": "Successful"
+                }
+            },
+            {
+                "name": "Invalid Bus name",
+                "description": "Verify that the system handles the case where a passenger enters a bus name which does not exist.",
+                "input": {
+                    "selectedBusName": "Shyam",
+                    "selectedBusNo": "D45"
+                },
+                "expected": {
+                    "outcome": "No bus found with this name",
+                    "status": "No result found"
+                }
+            },
+            {
+                "name": "Invalid Bus no",
+                "description": "Verify that the system handles the case where a passenger enters a bus no which does not exist.",
+                "input": {
+                    "selectedBusName": "Shyamoli",
+                    "selectedBusNo": "34A"
+                },
+                "expected": {
+                    "outcome": "No bus found with this bus no",
+                    "status": "No result found"
+                }
+            },
+            {
+                "name": "Invalid Character in input",
+                "description": "Verify that the system handles the case where a passenger enters a special character as input.",
+                "input": {
+                    "selectedBusName": "Shy#mli",
+                    "selectedBusNo": "S56"
+                },
+                "expected": {
+                    "outcome": "Invalid input found",
+                    "status": "No result found"
+                }
+            },
+            {
+                "name": "Incomplete input field",
+                "description": "Verify that the system handles the case where a passenger submits request with an incomplete input field.",
+                "input": {
+                    "selectedBusName": "Shyamli",
+                    "selectedBusNo": null
+                },
+                "expected": {
+                    "outcome": "Please fill all the input fields - message displayed.",
+                    "status": "Unsuccessful"
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Submit a review for a bus service",
+            "scenario": "A passenger reviews a specific bus service.",
+            "actors": "Passenger, System",
+            "preconditions": "The passenger and the bus service both are registered in the application.",
+            "steps": [
+                "Passenger selects a bus service to review",
+                "Passenger writes a review text and select a ratign between 1-10",
+                "Passenger submits the review"
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Valid Review with both comment and rating",
+                "description": "Verify that the passenger can submit a valid review with both review comment and rating.",
+                "input": {
+                    "selectedBusName": "Shyamoli",
+                    "selectedBusNo": "A23",
+                    "rating": 8,
+                    "reviewComment": "Good Service, but could be better."
+                },
+                "expected": {
+                    "outcome": "Review submission successful",
+                    "status": "Successful"
+                }
+            },
+            {
+                "name": "Valid review with rating but without comment",
+                "description": "Verify that the system handles the case where the passenger can submit a review with rating but without comment.",
+                "input": {
+                    "selectedBusName": "Shyamoli",
+                    "selectedBusNo": "A23",
+                    "rating": 5,
+                    "reviewComment": null
+                },
+                "expected": {
+                    "outcome": "Review submission successful",
+                    "status": "Successful"
+                }
+            },
+            {
+                "name": "Invalid character input for review comment",
+                "description": "Verify that the system handles the case where the passenger tries to submit a review with a special character in the review comment.",
+                "input": {
+                    "selectedBusName": "Uttara",
+                    "selectedBusNo": "O89",
+                    "rating": 5,
+                    "reviewComment": "GooD @service from them"
+                },
+                "expected": {
+                    "outcome": "Invalid character detected - message displayed.",
+                    "status": "Unsuccessful"
+                }
+            },
+            {
+                "name": "Incomplete review submission",
+                "description": "Verify that the system handles the case where the passenger submits the review without filling the rating.",
+                "input": {
+                    "selectedBusName": "Ramna",
+                    "selectedBusNo": "L78",
+                    "rating": null,
+                    "reviewComment": "Very bad service"
+                },
+                "expected": {
+                    "outcome": "Incomplete review submission - message displayed.",
+                    "status": "Unsuccessful"
+                }
+            },
+            {
+                "name": "Exceed character limit in the review comment",
+                "description": "Verify that the system handles the case where the passenger exceeds the limit for review comment.",
+                "input": {
+                    "selectedBusName": "Ramna",
+                    "selectedBusNo": "L78",
+                    "rating": 4,
+                    "reviewComment": "Very bad service, It is really disappointing to see such actions from them. I had really high expectation from them as the best bus service in the southern Dhaka city..."
+                },
+                "expected": {
+                    "outcome": "Review comment character limit exceeded - message displayed.",
+                    "status": "Unsuccessful"
+                }
+            },
+            {
+                "name": "Try to review a invalid bus",
+                "description": "Verify that the system handles the case where the passenger submits the review about a bus which does not exist",
+                "input": {
+                    "selectedBusName": "Ramna",
+                    "selectedBusNo": "L7823e",
+                    "rating": 5,
+                    "reviewComment": "Very bad service"
+                },
+                "expected": {
+                    "outcome": "Invalid bus no - message displayed.",
+                    "status": "Unsuccessful"
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Get reviews for the bus service",
+            "scenario": "Passenger views the reviews for a specific bus service.",
+            "actors": "Passenger, System",
+            "preconditions": "Passenger is logged in in the application, and the bus service is registered in the application.",
+            "steps": [
+                "Passenger selects a bus service",
+                "Passenger request to view the reviews",
+                "The system displays the reviews of the bus service."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Displays reviews successfully",
+                "description": "Verify that the system successfully displays all the reviews for the specific bus service.",
+                "input": {
+                    "selectedBusName": "Padma",
+                    "selectedBusNo": "E30"
+                },
+                "expected": {
+                    "outcome": "Displays the reviews of the specific bus service.",
+                    "status": "Successful"
+                }
+            },
+            {
+                "name": "No reviews for the bus service",
+                "description": "Verify that the system handles the case where the bus service has no reviews.",
+                "input": {
+                    "selectedBusName": "Jamuna",
+                    "selectedBusNo": "L78"
+                },
+                "expected": {
+                    "outcome": "No reviews available for this bus service - message displayed",
+                    "status": "Rejected"
+                }
+            },
+            {
+                "name": "Invalid Bus name",
+                "description": "Verify that the system handles the case where there is no bus with the name and bus no.",
+                "input": {
+                    "selectedBusName": "BRTC",
+                    "selectedBusNo": "P909"
+                },
+                "expected": {
+                    "outcome": "Invalid bus name - message displayed",
+                    "status": "Unsuccessful"
+                }
+            },
+            {
+                "name": "Display reviews with a valid filter",
+                "description": "Verify that the system handles the case where passenger wants to apply a valid filter on the reviews",
+                "input": {
+                    "selectedBusName": "BRTC",
+                    "selectedBusNo": "P909",
+                    "filter": "Name(A-Z)"
+                },
+                "expected": {
+                    "outcome": "Displays the reviews applying the filter",
+                    "status": "Successful"
+                }
+            },
+            {
+                "name": "Display reviews with a Invalid filter",
+                "description": "Verify that the system handles the case where passenger wants to apply a invalid filter on the reviews",
+                "input": {
+                    "selectedBusName": "BRTC",
+                    "selectedBusNo": "P909",
+                    "filter": "Name(0-9)"
+                },
+                "expected": {
+                    "outcome": "Invalid filter detected - message displayed",
+                    "status": "Unsuccessful"
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "id": "UC1",
+            "name": "Search Bus by Route",
+            "scenario": "Users can search for a bus by entering the start and destination points.",
+            "actors": [
+                "User"
+            ],
+            "preconditions": [
+                "User is logged in",
+                "User is on the main search screen"
+            ],
+            "postconditions": [
+                "The user is shown a list of buses matching the specified route",
+                "Buses displayed include details such as authorized route and expected time"
+            ],
+            "steps": [
+                "User enters the start point and destination",
+                "User clicks the 'Search' button",
+                "System displays a list of buses with details"
+            ],
+            "alternate_steps": [
+                {
+                    "condition": "No buses available for the entered route",
+                    "steps": [
+                        "System displays a message: 'No buses found for the selected route'"
+                    ]
+                }
+            ]
+        },
+        "testcases": [
+            {
+                "id": "TC1",
+                "name": "Search Bus with Valid Route",
+                "TestScenario": "Verify that the system displays a list of buses for a valid start and destination route.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "steps": [
+                    "Enter valid start and destination points",
+                    "Click the 'Search' button"
+                ],
+                "expected_result": "System displays a list of buses for the specified route"
+            },
+            {
+                "id": "TC2",
+                "name": "Search Bus with Invalid Route",
+                "TestScenario": "Verify that the system displays an appropriate message if no buses are available for the entered route.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "steps": [
+                    "Enter start and destination points for a route with no bus service",
+                    "Click the 'Search' button"
+                ],
+                "expected_result": "System displays a message: 'No buses found for the selected route'"
+            },
+            {
+                "id": "TC3",
+                "name": "Attempt to View Details of a Bus with No Information",
+                "TestScenario": "Verify that the system informs the user if no additional details are available for the selected bus.",
+                "preconditions": [
+                    "User has searched for a valid route and search results are displayed"
+                ],
+                "steps": [
+                    "Click on a bus from the search results with no additional information"
+                ],
+                "expected": {
+                    "outcome": "System displays a message: 'No additional information available for this bus'",
+                    "status": "Error: No Additional Information"
+                }
+            },
+            {
+                "id": "TC4",
+                "name": "Search with Only Start Point Provided",
+                "TestScenario": "Verify that the system prompts the user to enter a destination if only the start point is provided.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "steps": [
+                    "Enter only the start point and leave the destination empty",
+                    "Click the 'Search' button"
+                ],
+                "expected": {
+                    "outcome": "User is prompted to enter both start and destination points",
+                    "status": "Error: Missing Destination"
+                }
+            },
+            {
+                "id": "TC5",
+                "name": "Search with Only Destination Provided",
+                "TestScenario": "Verify that the system prompts the user to enter a start point if only the destination is provided.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "steps": [
+                    "Enter only the destination and leave the start point empty",
+                    "Click the 'Search' button"
+                ],
+                "expected": {
+                    "outcome": "User is prompted to enter both start and destination points",
+                    "status": "Error: Missing Start Point"
+                }
+            },
+            {
+                "id": "TC6",
+                "name": "Search for Past Date or Time",
+                "TestScenario": "Verify that the system restricts users from searching for bus services at a past date or time.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "steps": [
+                    "Enter a valid start and destination point",
+                    "Select a past date or time for the journey",
+                    "Click the 'Search' button"
+                ],
+                "expected": {
+                    "outcome": "User is prompted to select a future date and time",
+                    "status": "Error: Past Date/Time Selected"
+                }
+            },
+            {
+                "id": "TC7",
+                "name": "Search with Non-Existent Route",
+                "TestScenario": "Verify that the system handles cases where the start or destination does not exist in the database.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "steps": [
+                    "Enter a non-existent location as start or destination point",
+                    "Click the 'Search' button"
+                ],
+                "expected": {
+                    "outcome": "System displays a message indicating the route is not found",
+                    "status": "Error: Route Not Found"
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "id": "UC2",
+            "name": "Select a Bus from Search Results",
+            "scenario": "Users can select a specific bus from the search results to view more details.",
+            "actors": [
+                "User"
+            ],
+            "preconditions": [
+                "User has searched for a bus by route",
+                "Search results are displayed on the screen"
+            ],
+            "postconditions": [
+                "The user views detailed information about the selected bus",
+                "User has an option to book or check more info on the bus"
+            ],
+            "steps": [
+                "User clicks on a bus from the search results",
+                "System opens a detailed view of the selected bus with more information"
+            ],
+            "alternate_steps": [
+                {
+                    "condition": "Selected bus has no additional details",
+                    "steps": [
+                        "System displays a message: 'No additional information available for this bus'"
+                    ]
+                }
+            ]
+        },
+        "testcases": [
+            {
+                "id": "TC1",
+                "name": "Select Bus from Search Results",
+                "TestScenario": "Verify that the user can select a bus from the search results to view more information.",
+                "preconditions": [
+                    "User has searched for a valid route and search results are displayed"
+                ],
+                "steps": [
+                    "Click on a bus from the search results"
+                ],
+                "expected_result": "System displays detailed information about the selected bus"
+            },
+            {
+                "id": "TC2",
+                "name": "Select Bus and Check Estimated Time",
+                "TestScenario": "Verify that the system displays the estimated arrival time for the selected bus.",
+                "preconditions": [
+                    "User has searched for a valid route and search results are displayed"
+                ],
+                "steps": [
+                    "Click on a bus from the search results"
+                ],
+                "expected": {
+                    "outcome": "System displays detailed information including estimated arrival time",
+                    "status": "Success: Details Displayed"
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Bus Ticket Payment",
+            "scenario": "User completes the payment for a selected ticket.",
+            "actors": "User, System,  SSLCommerz Payment Gateway",
+            "preconditions": [
+                "User is logged in as a registered user.",
+                "User has selected a specific bus and route.",
+                "User has selected a payment method through SSLCommerz."
+            ],
+            "steps": [
+                "User selects the bus ticket and proceeds to checkout.",
+                "System displays available payment options.",
+                "User selects SSLCommerz payment method.",
+                "System redirects to SSLCommerz for payment processing.",
+                "User enters payment details and submits the payment.",
+                "SSLCommerz verifies the payment and returns the status.",
+                "System updates the ticket status based on payment success or failure.",
+                "System sends ticket confirmation or failure notification to the User."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Successful Payment with Credit/Debit Card",
+                "description": "Verify that a User can successfully make a payment using a credit/debit card.",
+                "input": {
+                    "paymentMethod": "Credit/Debit Card",
+                    "cardNumber": "4111111111111111",
+                    "expirationDate": "12/25",
+                    "cvv": "123",
+                    "amount": 500,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Successful",
+                    "status": "Ticket Confirmed",
+                    "userNotification": "Ticket Confirmed. You can download your ticket from the 'My Tickets' section."
+                }
+            },
+            {
+                "name": "Failed Payment due to Insufficient Funds",
+                "description": "Verify that a User cannot make a payment with a credit/debit card that has insufficient funds.",
+                "input": {
+                    "paymentMethod": "Credit/Debit Card",
+                    "cardNumber": "4111111111111111",
+                    "expirationDate": "12/25",
+                    "cvv": "123",
+                    "amount": 500,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Insufficient Funds",
+                    "userNotification": "Payment Failed. Insufficient funds in your account."
+                }
+            },
+            {
+                "name": "Failed Payment due to Expired Card",
+                "description": "Verify that a User cannot make a payment using a credit/debit card that has expired.",
+                "input": {
+                    "paymentMethod": "Credit/Debit Card",
+                    "cardNumber": "4111111111111111",
+                    "expirationDate": "12/22",
+                    "cvv": "123",
+                    "amount": 500,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Card Expired",
+                    "userNotification": "Payment Failed. Card has expired."
+                }
+            },
+            {
+                "name": "Failed Payment due to Invalid Card Details",
+                "description": "Verify that a User cannot make a payment using invalid credit/debit card details.",
+                "input": {
+                    "paymentMethod": "Credit/Debit Card",
+                    "cardNumber": "1234XYZ812345678",
+                    "expirationDate": "12/25",
+                    "cvv": "999",
+                    "amount": 500,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Invalid Card Details",
+                    "userNotification": "Payment Failed. Invalid card details."
+                }
+            },
+            {
+                "name": "Successful Payment with Mobile Banking(Bkash, Nagad, Rocket etc.)",
+                "description": "Verify that a User can successfully make a payment using a mobile banking payment system.",
+                "input": {
+                    "paymentMethod": "Any of the allowed mobile banking payment system",
+                    "accountNumber": "01712345678",
+                    "otp": "123456",
+                    "pin": "1234",
+                    "amount": 250,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Successful",
+                    "status": "Ticket Confirmed",
+                    "userNotification": "Ticket Confirmed. You can download your ticket from the 'My Tickets' section."
+                }
+            },
+            {
+                "name": "Failed Payment due to Incorrect Account Number",
+                "description": "Verify that a User cannot make a payment with an incorrect account number during the mobile banking payment process.",
+                "input": {
+                    "paymentMethod": "Any of the allowed mobile banking payment system",
+                    "accountNumber": "018XY345678",
+                    "amount": 250,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Incorrect Account Number",
+                    "userNotification": "Payment Failed. Incorrect account number."
+                }
+            },
+            {
+                "name": "Failed Payment due to Incorrect OTP",
+                "description": "Verify that a User cannot make a payment with an incorrect OTP during the mobile banking payment process.",
+                "input": {
+                    "paymentMethod": "Any of the allowed mobile banking payment system",
+                    "accountNumber": "01712345678",
+                    "otp": "000000",
+                    "amount": 250,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Incorrect OTP",
+                    "userNotification": "Payment Failed. Incorrect OTP."
+                }
+            },
+            {
+                "name": "Failed Payment due to Incorrect PIN",
+                "description": "Verify that a User cannot make a payment with an incorrect PIN during the mobile banking payment process.",
+                "input": {
+                    "paymentMethod": "Any of the allowed mobile banking payment system",
+                    "accountNumber": "01712345678",
+                    "otp": "123456",
+                    "pin": "XY00",
+                    "amount": 250,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Incorrect PIN",
+                    "userNotification": "Payment Failed. Incorrect PIN."
+                }
+            },
+            {
+                "name": "Failed Payment due to Insufficient Balance in the Mobile Banking Account",
+                "description": "Verify that a User cannot make a payment with insufficient balance in the mobile banking account.",
+                "input": {
+                    "paymentMethod": "Any of the allowed mobile banking payment system",
+                    "bkashNumber": "01612345678",
+                    "otp": "654321",
+                    "amount": 500,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Insufficient Balance",
+                    "userNotification": "Payment Failed. Insufficient balance in your account."
+                }
+            },
+            {
+                "name": "Failed Payment due to Network Timeout in Credit/Debit Card Payment",
+                "description": "Verify that a User cannot make a payment when the network times out during the payment process.",
+                "input": {
+                    "paymentMethod": "Credit/Debit Card",
+                    "cardNumber": "4111111111111111",
+                    "expirationDate": "12/25",
+                    "cvv": "123",
+                    "amount": 5000,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Network Timeout",
+                    "userNotification": "Payment Failed. Network timeout. Please try again."
+                }
+            },
+            {
+                "name": "Failed Payment due to Network Timeout in Mobile Banking",
+                "description": "Verify that a User cannot make a payment when the network times out during the mobile banking payment process.",
+                "input": {
+                    "paymentMethod": "Any of the allowed mobile banking payment system",
+                    "accountNumber": "01712345678",
+                    "otp": "123456",
+                    "pin": "1234",
+                    "amount": 2500,
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Payment Failed",
+                    "status": "Network Timeout",
+                    "userNotification": "Payment Failed. Network timeout. Please try again."
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Ticket Validation",
+            "scenario": "User validates their ticket before boarding the bus.",
+            "actors": "User, System",
+            "preconditions": [
+                "User is logged in as a registered user.",
+                "User possesses a valid ticket."
+            ],
+            "steps": [
+                "User navigates to the ticket validation section.",
+                "User enters the ticket ID for validation.",
+                "System retrieves ticket information from the database.",
+                "System checks the ticket status (valid, expired, used, etc.).",
+                "System displays the validation result to the User."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Valid Ticket",
+                "description": "Verify that a User can successfully validate a valid ticket.",
+                "input": {
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Validation Successful",
+                    "status": "Valid Ticket",
+                    "userNotification": "Your ticket is valid and ready for boarding."
+                }
+            },
+            {
+                "name": "Invalid Ticket",
+                "description": "Verify that a User cannot validate an invalid ticket.",
+                "input": {
+                    "ticketID": "INVALIDTICKET"
+                },
+                "expected": {
+                    "outcome": "Validation Failed",
+                    "status": "Invalid Ticket",
+                    "userNotification": "The ticket ID you entered is invalid. Please check and try again."
+                }
+            },
+            {
+                "name": "Expired Ticket",
+                "description": "Verify that a User cannot validate a ticket that has expired.",
+                "input": {
+                    "ticketID": "EXPIREDTICKET"
+                },
+                "expected": {
+                    "outcome": "Validation Failed",
+                    "status": "Expired Ticket",
+                    "userNotification": "This ticket has expired. Please purchase a new ticket."
+                }
+            },
+            {
+                "name": "Ticket Already Used",
+                "description": "Verify that a User cannot validate a ticket that has already been used.",
+                "input": {
+                    "ticketID": "USEDTICKET"
+                },
+                "expected": {
+                    "outcome": "Validation Failed",
+                    "status": "Ticket Already Used",
+                    "userNotification": "This ticket has already been used. You cannot use it again."
+                }
+            },
+            {
+                "name": "Network Error During Validation",
+                "description": "Verify that a User is notified of a network error during the ticket validation process.",
+                "input": {
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Validation Failed",
+                    "status": "Network Error",
+                    "userNotification": "Unable to validate the ticket due to a network error. Please try again later."
+                }
+            },
+            {
+                "name": "Database Error During Validation",
+                "description": "Verify that a User is notified if there is a database error while validating the ticket.",
+                "input": {
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Validation Failed",
+                    "status": "Database Error",
+                    "userNotification": "Unable to validate the ticket due to a database error. Please contact support."
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Ticket Download",
+            "scenario": "User downloads their bus ticket in a digital format.",
+            "actors": "User, System",
+            "preconditions": [
+                "User is logged in as a registered user.",
+                "User made a successful payment for the ticket.",
+                "User has a valid ticket available for download."
+            ],
+            "steps": [
+                "User navigates to the ticket section in their account.",
+                "User selects the ticket they wish to download.",
+                "System retrieves ticket details.",
+                "System generates a downloadable file (e.g., PDF) for the ticket.",
+                "System prompts the User to download the file."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Successful Ticket Download",
+                "description": "Verify that a User can successfully download a valid ticket.",
+                "input": {
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Download Successful",
+                    "status": "Ticket File Generated",
+                    "userNotification": "Your ticket has been successfully downloaded."
+                }
+            },
+            {
+                "name": "Download Ticket That Does Not Exist",
+                "description": "Verify that a User cannot download a ticket that does not exist.",
+                "input": {
+                    "ticketID": "NONEXISTENTTICKET"
+                },
+                "expected": {
+                    "outcome": "Download Failed",
+                    "status": "Ticket Not Found",
+                    "userNotification": "The ticket you are trying to download does not exist."
+                }
+            },
+            {
+                "name": "Download Expired Ticket",
+                "description": "Verify that a User cannot download a ticket that has expired.",
+                "input": {
+                    "ticketID": "EXPIREDTICKET"
+                },
+                "expected": {
+                    "outcome": "Download Failed",
+                    "status": "Expired Ticket",
+                    "userNotification": "This ticket has expired and cannot be downloaded."
+                }
+            },
+            {
+                "name": "Download Ticket That Has Already Been Used",
+                "description": "Verify that a User cannot download a ticket that has already been used.",
+                "input": {
+                    "ticketID": "USEDTICKET"
+                },
+                "expected": {
+                    "outcome": "Download Failed",
+                    "status": "Ticket Already Used",
+                    "userNotification": "This ticket has already been used and cannot be downloaded."
+                }
+            },
+            {
+                "name": "Network Error During Download",
+                "description": "Verify that a User is notified of a network error during the ticket download process.",
+                "input": {
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Download Failed",
+                    "status": "Network Error",
+                    "userNotification": "Unable to download the ticket due to a network error. Please try again later."
+                }
+            },
+            {
+                "name": "Database Error During Download",
+                "description": "Verify that a User is notified if there is a database error while attempting to download the ticket.",
+                "input": {
+                    "ticketID": "TICKET12345"
+                },
+                "expected": {
+                    "outcome": "Download Failed",
+                    "status": "Database Error",
+                    "userNotification": "Unable to download the ticket due to a database error. Please contact support."
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "View Available Seats",
+            "scenario": "User wants to view the available seats of a bus.",
+            "actors": [
+                "System",
+                "User"
+            ],
+            "preconditions": "The user is registered one and logged into the BusTopia app or website.",
+            "steps": [
+                "The user selects source and destination.",
+                "The user selects a bus.",
+                "System shows all the available seats if the request is valid."
+            ],
+            "testcases": [
+                {
+                    "name": "Valid data submission for available seats.",
+                    "description": "View available seats for a valid bus ID, source, and destination.",
+                    "input": {
+                        "bus_id": "A234",
+                        "source": "Dhaka",
+                        "destination": "Chittagong"
+                    },
+                    "expected_output": {
+                        "status": "Success",
+                        "available_seats": [
+                            "C1",
+                            "C2",
+                            "D3",
+                            "D4",
+                            "E1",
+                            "E2"
+                        ]
+                    }
+                },
+                {
+                    "name": "Data submission with invalid bus ID.",
+                    "description": "View available seats for a invalid bus ID.",
+                    "input": {
+                        "bus_id": "Z999",
+                        "source": "Dhaka",
+                        "destination": "Chittagong"
+                    },
+                    "expected_output": {
+                        "status": "Failure",
+                        "message": "Bus not found"
+                    }
+                },
+                {
+                    "name": "Data submission with valid bus ID without available seats.",
+                    "description": "View seats for a valid bus with no available seats.",
+                    "input": {
+                        "bus_id": "G658",
+                        "source": "Dhaka",
+                        "destination": "Chittagong"
+                    },
+                    "expected_output": {
+                        "status": "Success",
+                        "message": []
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "usecase": {
+            "name": "Book Seats",
+            "scenario": "User wants to book the available seats of a bus.",
+            "actors": [
+                "System",
+                "User"
+            ],
+            "preconditions": "The user is registered one and logged into the BusTopia app or website.",
+            "steps": [
+                "The user selects source and destination.",
+                "The user selects a bus.",
+                "System shows all the available seats if the request is valid.",
+                "If seats are available user books available seats."
+            ],
+            "testcases": [
+                {
+                    "name": "Valid booking of a single seat",
+                    "description": "Book a single valid seat for a valid bus and route.",
+                    "input": {
+                        "bus_id": "D143",
+                        "source": "Dhaka",
+                        "destination": "Chittagong",
+                        "seats_to_book": [
+                            "D3"
+                        ]
+                    },
+                    "expected_output": {
+                        "status": "Success",
+                        "message": "Seat booked successfully"
+                    }
+                },
+                {
+                    "name": "Valid booking of multiple seats",
+                    "description": "Book a single valid seat for a valid bus and route.",
+                    "input": {
+                        "bus_id": "D143",
+                        "source": "Dhaka",
+                        "destination": "Chittagong",
+                        "seats_to_book": [
+                            "E2",
+                            "E3",
+                            "E4"
+                        ]
+                    },
+                    "expected_output": {
+                        "status": "Success",
+                        "message": "Seats booked successfully"
+                    }
+                },
+                {
+                    "name": "Invalid booking of an already reserved seat",
+                    "description": "Attempt to book an already reserved seat.",
+                    "input": {
+                        "bus_id": "D143",
+                        "source": "Dhaka",
+                        "destination": "Chittagong",
+                        "seats_to_book": [
+                            "D3"
+                        ]
+                    },
+                    "expected_output": {
+                        "status": "Error",
+                        "message": "Seat D3 is already booked"
+                    }
+                },
+                {
+                    "name": "Invalid booking of more seats than availability",
+                    "description": "Attempt to book more seats than available for a valid route.",
+                    "input": {
+                        "bus_id": "D143",
+                        "source": "Dhaka",
+                        "destination": "Chittagong",
+                        "seats_to_book": [
+                            "D3",
+                            "D4",
+                            "E1",
+                            "E2",
+                            "E3",
+                            "E4"
+                        ]
+                    },
+                    "expected_output": {
+                        "status": "Error",
+                        "message": "Not enough seats available"
+                    }
+                }
+            ]
+        }
+    },
+    {
+        "usecase": {
+            "name": "View Nearby Bus Stops",
+            "scenario": "User wants to find bus stops nearby to start their journey.",
+            "actors": [
+                "User",
+                "System"
+            ],
+            "preconditions": [
+                "User has enabled location permissions.",
+                "User has a stable internet connection."
+            ],
+            "steps": [
+                "User opens the application and logs in.",
+                "System accesses the user's current location.",
+                "User selects a destination.",
+                "System identifies bus stops within a predefined radius (e.g., 1km) of the user's location.",
+                "System displays a list of nearby bus stops with distances and estimated time to reach."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "User inputs a valid destination",
+                "testScenario": "Verify the functionality of viewing nearby bus stops.",
+                "testSteps": [
+                    "Open the BusTopia application.",
+                    "Log in with valid user credentials.",
+                    "Ensure location permissions are enabled.",
+                    "Select a destination from the list or search for a destination.",
+                    "View the list of bus stops displayed by the system within a predefined radius."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "destination": "Downtown"
+                },
+                "expectedResults": [
+                    "The system identifies and displays bus stops within a certain radius.",
+                    "Each bus stop in the list displays the distance from the user’s current location and the estimated time to reach."
+                ]
+            },
+            {
+                "name": "User inputs an invalid destination",
+                "testScenario": "Verify the functionality of viewing nearby bus stops.",
+                "testSteps": [
+                    "Open the BusTopia application.",
+                    "Log in with valid user credentials.",
+                    "Ensure location permissions are enabled.",
+                    "Search for a destination.",
+                    "View the list of bus stops displayed by the system within a predefined radius."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "destination": "Downtown"
+                },
+                "expectedResults": "An error message appears showing no such location found."
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Get Estimated Arrival Time for Nearby Buses",
+            "scenario": "User wants to know the estimated time to reach each nearby bus stop and the buses arriving soon.",
+            "actors": [
+                "User",
+                "System"
+            ],
+            "preconditions": [
+                "User has enabled location permissions.",
+                "User has a stable internet connection."
+            ],
+            "steps": [
+                "User opens the application and logs in.",
+                "System accesses the user's current location.",
+                "User selects a destination.",
+                "System identifies bus stops within a predefined radius (e.g., 1km) of the user's location.",
+                "User selects a nearby bus stop from the list.",
+                "System calculates the user's estimated walking time to reach the bus stop.",
+                "System retrieves real-time data of buses arriving at the selected bus stop.",
+                "System displays the list of buses with their estimated arrival times and the user’s estimated time to reach the stop."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "User views estimated arrival time for buses",
+                "testScenario": "Verify the system displays estimated arrival times of buses arriving at the selected bus stop.",
+                "testSteps": [
+                    "Open the BusTopia application.",
+                    "Log in with valid user credentials.",
+                    "Ensure location permissions are enabled.",
+                    "Select a destination from the list or search for a destination.",
+                    "View the list of bus stops displayed by the system.",
+                    "Select a nearby bus stop.",
+                    "View the estimated time for the user to reach the bus stop and the buses arriving at that stop."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "destination": "Downtown",
+                    "busStop": "Central Park Stop"
+                },
+                "expectedResults": [
+                    "The system shows the user’s estimated walking time to the selected bus stop.",
+                    "The system retrieves and displays real-time arrival times for the upcoming buses at the stop."
+                ]
+            },
+            {
+                "name": "No real-time bus data available",
+                "testScenario": "Verify the system handles the scenario when no real-time bus data is available.",
+                "testSteps": [
+                    "Open the BusTopia application.",
+                    "Log in with valid user credentials.",
+                    "Ensure location permissions are enabled.",
+                    "Select a destination from the list or search for a destination.",
+                    "View the list of bus stops displayed by the system.",
+                    "Select a nearby bus stop.",
+                    "View the system response for buses at the stop."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "destination": "Downtown",
+                    "busStop": "Central Park Stop"
+                },
+                "expectedResults": "An error message or notification is shown stating 'Real-time data not available at the moment.'"
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "View Available Buses and Routes",
+            "scenario": "User wants to check available buses and routes to their destination from a nearby bus stop.",
+            "actors": [
+                "User",
+                "System"
+            ],
+            "preconditions": [
+                "User has entered a destination location.",
+                "Nearby bus stops are identified."
+            ],
+            "steps": [
+                "User selects a bus stop from the nearby list.",
+                "System shows a list of buses available from the selected stop that can reach the destination.",
+                "System displays route information, including stops along the way and the expected travel time."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "User checks available buses and routes",
+                "testScenario": "Verify the system shows available buses and their routes from a selected stop to the destination.",
+                "testSteps": [
+                    "Open the BusTopia application.",
+                    "Log in with valid user credentials.",
+                    "Ensure location permissions are enabled.",
+                    "Select a destination.",
+                    "View the list of nearby bus stops.",
+                    "Select a bus stop.",
+                    "View the list of available buses and their routes."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "destination": "Downtown",
+                    "busStop": "Central Park Stop"
+                },
+                "expectedResults": [
+                    "The system displays a list of buses from the selected stop to the destination.",
+                    "Each bus shows the route details, including intermediate stops and the estimated travel time."
+                ]
+            },
+            {
+                "name": "No buses available for selected route",
+                "testScenario": "Verify the system response when no buses are available from the selected stop to the destination.",
+                "testSteps": [
+                    "Open the BusTopia application.",
+                    "Log in with valid user credentials.",
+                    "Ensure location permissions are enabled.",
+                    "Select a destination.",
+                    "View the list of nearby bus stops.",
+                    "Select a bus stop.",
+                    "Check for available buses and routes."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "destination": "Unknown Place",
+                    "busStop": "Central Park Stop"
+                },
+                "expectedResults": "An error message appears stating 'No buses available for the selected route.'"
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Show Directions to Selected Bus Stop",
+            "scenario": "User wants navigation to a selected bus stop.",
+            "actors": [
+                "User",
+                "System"
+            ],
+            "preconditions": [
+                "User has enabled location permissions.",
+                "User has selected a bus stop."
+            ],
+            "steps": [
+                "User selects 'Get Directions' for a nearby bus stop.",
+                "System calculates the best walking route from the user's location to the bus stop.",
+                "System displays a map view with the route highlighted and step-by-step directions."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "User gets directions to a selected bus stop",
+                "testScenario": "Verify the system provides step-by-step directions to a selected bus stop.",
+                "testSteps": [
+                    "Open the BusTopia application.",
+                    "Log in with valid user credentials.",
+                    "Ensure location permissions are enabled.",
+                    "Select a destination.",
+                    "View the list of nearby bus stops.",
+                    "Select 'Get Directions' for a bus stop.",
+                    "View the route and step-by-step directions displayed on the map."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "destination": "Downtown",
+                    "busStop": "Central Park Stop"
+                },
+                "expectedResults": [
+                    "The system displays the best walking route to the selected bus stop.",
+                    "The map view highlights the route with step-by-step navigation."
+                ]
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "id": "UC3",
+            "name": "Show Most Efficient Routes for Source and Destination",
+            "scenario": "The system displays the most efficient bus routes between a given source and destination, considering factors such as travel time, bus frequency, and route length.",
+            "actors": [
+                "User"
+            ],
+            "preconditions": [
+                "User is on the main search screen",
+                "User has entered both a valid source and destination"
+            ],
+            "postconditions": [
+                "The user sees a list of recommended routes sorted by efficiency",
+                "The system highlights the most efficient route based on the selected criteria"
+            ],
+            "steps": [
+                "User enters a source and destination",
+                "User clicks the 'Find Routes' button",
+                "System analyzes routes based on travel time, frequency, and route length",
+                "System displays a list of efficient routes, with the top option highlighted"
+            ],
+            "alternate_steps": [
+                {
+                    "condition": "No efficient routes are available",
+                    "steps": [
+                        "System displays a message: 'No available routes for the selected source and destination'"
+                    ]
+                }
+            ]
+        },
+        "testcases": [
+            {
+                "id": "TC1",
+                "title": "Display Most Efficient Route for Valid Source and Destination",
+                "TestScenario": "Verify that the system displays the most efficient route when a valid source and destination are entered.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "test_steps": [
+                    "Enter a valid source and destination",
+                    "Click the 'Find Routes' button"
+                ],
+                "expected": {
+                    "outcome": "System displays a list of efficient routes with the most efficient option highlighted",
+                    "status": "Success: Efficient Routes Displayed"
+                }
+            },
+            {
+                "id": "TC2",
+                "title": "No Routes Available for Selected Source and Destination",
+                "TestScenario": "Verify that the system displays an appropriate message if no routes are available between the entered source and destination.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "test_steps": [
+                    "Enter a source and destination with no available routes",
+                    "Click the 'Find Routes' button"
+                ],
+                "expected": {
+                    "outcome": "System displays a message: 'No available routes for the selected source and destination'",
+                    "status": "Error: No Routes Found"
+                }
+            },
+            {
+                "id": "TC3",
+                "title": "Display Multiple Efficient Routes Sorted by Criteria",
+                "TestScenario": "Verify that the system displays multiple routes sorted by efficiency criteria (travel time, frequency, and route length) when more than one efficient route exists.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "test_steps": [
+                    "Enter a source and destination with multiple available routes",
+                    "Click the 'Find Routes' button"
+                ],
+                "expected": {
+                    "outcome": "System displays multiple routes sorted by efficiency, with the top option highlighted",
+                    "status": "Success: Multiple Efficient Routes Displayed"
+                }
+            },
+            {
+                "id": "TC4",
+                "title": "Efficient Route Display with Limited Bus Frequency",
+                "TestScenario": "Verify that the system considers low-frequency routes less efficient, even if they are shorter.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "test_steps": [
+                    "Enter a source and destination with both high and low-frequency routes available",
+                    "Click the 'Find Routes' button"
+                ],
+                "expected": {
+                    "outcome": "System displays high-frequency routes as more efficient and highlights them over low-frequency ones",
+                    "status": "Success: High-Frequency Route Highlighted"
+                }
+            },
+            {
+                "id": "TC5",
+                "title": "Route Display with User-Preferred Efficiency Criteria",
+                "TestScenario": "Verify that the system allows users to choose the criteria (e.g., shortest time, fewest stops) for determining route efficiency.",
+                "preconditions": [
+                    "User is on the main search screen"
+                ],
+                "test_steps": [
+                    "Enter a source and destination",
+                    "Select 'Fewest Stops' as the preferred efficiency criteria",
+                    "Click the 'Find Routes' button"
+                ],
+                "expected": {
+                    "outcome": "System displays routes sorted by the selected efficiency criteria (Fewest Stops)",
+                    "status": "Success: Routes Sorted by Fewest Stops"
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Track a Bus",
+            "scenario": "User searches a bus or gives ID of a bus, API fetches the current location data of the bus and the data is displayed to the user",
+            "actors": "User, API",
+            "preconditions": [
+                "Bus tracking system API is operational"
+            ],
+            "steps": [
+                "User goes to the \"Track Live Location\" page",
+                "User searches for a bus with route or name and time, or enter the bus ID directly",
+                "System fetches the location data of the bus from API",
+                "System shows the live location of the bus through a map"
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Successful Bus Tracking by ID",
+                "description": "Verify that a user can successfully track a bus by entering a valid bus ID.",
+                "input": {
+                    "busID": "Shugondha A123"
+                },
+                "expected": {
+                    "outcome": "Tracking Successful",
+                    "status": "Location Displayed",
+                    "location": "23.7266° N, 90.3927° E"
+                }
+            },
+            {
+                "name": "Successful Bus Tracking by Searching the Bus",
+                "description": "Verify that a user can successfully track a bus by entering the bus name, route, and time.",
+                "input": {
+                    "name": "Shugondha",
+                    "route": "default",
+                    "from": "Azimpur",
+                    "time": "10:10 AM"
+                },
+                "expected": {
+                    "outcome": "Tracking Successful",
+                    "status": "Location Displayed",
+                    "busID": "Shugondha A123, Shugondha A124",
+                    "location": "23.7266° N, 90.3927° E"
+                }
+            },
+            {
+                "name": "Invalid Bus ID Entry",
+                "description": "Verify that the system handles an invalid bus ID entry.",
+                "input": {
+                    "busID": "Shugondha 123"
+                },
+                "expected": {
+                    "outcome": "Tracking Failed",
+                    "status": "Error",
+                    "message": "Invalid bus ID or bus not found",
+                    "location": null
+                }
+            },
+            {
+                "name": "No Results Found While Searching Bus",
+                "description": "Verify that the system handles a case where no buses match the name provided by the user.",
+                "input": {
+                    "name": "Saganda"
+                },
+                "expected": {
+                    "outcome": "Tracking Failed",
+                    "status": "Error",
+                    "message": "No buses found",
+                    "location": null
+                }
+            },
+            {
+                "name": "API Failure/Timeout",
+                "description": "Verify that the system handles API failure or timeout scenarios.",
+                "input": {
+                    "busID": "Shugondha A123"
+                },
+                "expected": {
+                    "outcome": "Tracking Unavailable",
+                    "status": "Error",
+                    "message": "Unable to fetch bus location or network error. Please try again.",
+                    "location": null
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Monitor Bus Route and Notify Admin on Route Deviation",
+            "scenario": "The system automatically monitors bus locations in real-time, and if a bus is detected on an incorrect route, a notification is immediately sent to the admin.",
+            "actors": "System, API, Admin",
+            "preconditions": [
+                "Bus tracking system API is operational",
+                "Bus route data is predefined and configured in the system"
+            ],
+            "steps": [
+                "System continuously monitors the live location of each bus.",
+                "System compares the bus's current location with its predefined route.",
+                "If a bus is detected outside its assigned route, the system flags this as a deviation.",
+                "System sends an immediate notification to the admin, including the bus ID, current location, and timestamp of the deviation."
+            ],
+            "postconditions": [
+                "Admin is notified of the route deviation in real-time.",
+                "The admin takes corrective action as needed."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Route Deviation Detection and Notification Sent to Admin",
+                "description": "Verify that when a bus deviates from its predefined route, the system detects it and sends a notification to the admin.",
+                "input": {
+                    "busID": "Shugondha A123",
+                    "currentLocation": "23.7266° N, 90.3927° E",
+                    "assignedRoute": "RouteA",
+                    "deviationDetected": true
+                },
+                "expected": {
+                    "outcome": "Deviation Detected",
+                    "status": "Notification Sent",
+                    "message": "Admin notified of bus route deviation for Shugondha A123",
+                    "notificationDetails": {
+                        "busID": "Shugondha A123",
+                        "deviationLocation": "23.7266° N, 90.3927° E",
+                        "timestamp": "2024-10-28T12:00:00Z"
+                    }
+                }
+            },
+            {
+                "name": "Bus on Correct Route - No Notification Sent",
+                "description": "Verify that if the bus is following its correct route, the system does not send a notification to the admin.",
+                "input": {
+                    "busID": "Shugondha A123",
+                    "currentLocation": "23.7266° N, 90.3927° E",
+                    "assignedRoute": "RouteB",
+                    "deviationDetected": false
+                },
+                "expected": {
+                    "outcome": "No Deviation",
+                    "status": "No Notification",
+                    "message": null,
+                    "notificationDetails": null
+                }
+            },
+            {
+                "name": "System Response to Multiple Deviations",
+                "description": "Verify that if multiple buses deviate from their routes simultaneously, the system sends notifications for each deviation.",
+                "input": {
+                    "buses": [
+                        {
+                            "busID": "Shugondha A123",
+                            "currentLocation": "23.7266° N, 90.3927° E",
+                            "assignedRoute": "Route1",
+                            "deviationDetected": true
+                        },
+                        {
+                            "busID": "Bikash B34",
+                            "currentLocation": "23.876° N, 90.3934° E",
+                            "assignedRoute": "Route2",
+                            "deviationDetected": true
+                        }
+                    ]
+                },
+                "expected": {
+                    "outcome": "Notifications Sent for All Deviations",
+                    "status": "Notifications Sent",
+                    "message": "Admin receives notifications for each deviating bus",
+                    "notificationDetails": [
+                        {
+                            "busID": "Shugondha A123",
+                            "deviationLocation": "23.7266° N, 90.3927° E",
+                            "timestamp": "2024-10-28T16:00:00Z"
+                        },
+                        {
+                            "busID": "Bikash B34",
+                            "deviationLocation": "23.876° N, 90.3934° E",
+                            "timestamp": "2024-10-28T16:01:00Z"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "System Monitoring Bus Locations in Real-Time",
+                "description": "Verify that the system continuously monitors bus locations in real-time and checks for deviations at regular intervals.",
+                "input": {
+                    "monitoringStatus": "Active",
+                    "interval": "5 seconds"
+                },
+                "expected": {
+                    "outcome": "Monitoring Successful",
+                    "status": "Continuous Monitoring",
+                    "message": "System monitors each bus location in real-time without interruptions",
+                    "monitoringDetails": {
+                        "interval": "5 seconds",
+                        "activeBuses": [
+                            "Shugondha A123",
+                            "Bkash B34",
+                            "Romjan R5"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Monitor Bus Speed and Notify Admin on Speed Limit Violation",
+            "scenario": "The system automatically monitors bus speeds in real-time, and if a bus exceeds the predefined speed limit, a notification is immediately sent to the admin.",
+            "actors": "System, API, Admin",
+            "preconditions": [
+                "Bus tracking system API is operational",
+                "Bus speed limits are predefined and configured in the system"
+            ],
+            "steps": [
+                "System continuously monitors the live speed of each bus.",
+                "System compares the bus's current speed with its predefined speed limit.",
+                "If a bus is detected exceeding its speed limit, the system flags this as a violation.",
+                "System sends an immediate notification to the admin, including the bus ID, current speed, and timestamp of the violation."
+            ],
+            "postconditions": [
+                "Admin is notified of the speed limit violation in real-time.",
+                "The admin takes corrective action as needed."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Speed Limit Violation Detection and Notification Sent to Admin",
+                "description": "Verify that when a bus exceeds its speed limit, the system detects it and sends a notification to the admin.",
+                "input": {
+                    "busID": "Shugondha A123",
+                    "currentSpeed": 80,
+                    "speedLimit": 60,
+                    "violationDetected": true
+                },
+                "expected": {
+                    "outcome": "Violation Detected",
+                    "status": "Notification Sent",
+                    "message": "Admin notified of speed limit violation for Shugondha A123",
+                    "notificationDetails": {
+                        "busID": "Shugondha A123",
+                        "currentSpeed": 80,
+                        "timestamp": "2024-10-28T12:00:00Z"
+                    }
+                }
+            },
+            {
+                "name": "Bus Within Speed Limit - No Notification Sent",
+                "description": "Verify that if the bus is within its speed limit, the system does not send a notification to the admin.",
+                "input": {
+                    "busID": "Shugondha A123",
+                    "currentSpeed": 50,
+                    "speedLimit": 60,
+                    "violationDetected": false
+                },
+                "expected": {
+                    "outcome": "No Violation",
+                    "status": "No Notification",
+                    "message": null,
+                    "notificationDetails": null
+                }
+            },
+            {
+                "name": "System Response to Multiple Speed Violations",
+                "description": "Verify that if multiple buses exceed their speed limits simultaneously, the system sends notifications for each violation.",
+                "input": {
+                    "buses": [
+                        {
+                            "busID": "Shugondha A123",
+                            "currentSpeed": 80,
+                            "speedLimit": 60,
+                            "violationDetected": true
+                        },
+                        {
+                            "busID": "Bikash B34",
+                            "currentSpeed": 75,
+                            "speedLimit": 65,
+                            "violationDetected": true
+                        }
+                    ]
+                },
+                "expected": {
+                    "outcome": "Notifications Sent for All Violations",
+                    "status": "Notifications Sent",
+                    "message": "Admin receives notifications for each speeding bus",
+                    "notificationDetails": [
+                        {
+                            "busID": "Shugondha A123",
+                            "currentSpeed": 80,
+                            "timestamp": "2024-10-28T16:00:00Z"
+                        },
+                        {
+                            "busID": "Bikash B34",
+                            "currentSpeed": 75,
+                            "timestamp": "2024-10-28T16:01:00Z"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "System Monitoring Bus Speeds in Real-Time",
+                "description": "Verify that the system continuously monitors bus speeds in real-time and checks for speed violations at regular intervals.",
+                "input": {
+                    "monitoringStatus": "Active",
+                    "interval": "5 seconds"
+                },
+                "expected": {
+                    "outcome": "Monitoring Successful",
+                    "status": "Continuous Monitoring",
+                    "message": "System monitors each bus speed in real-time without interruptions",
+                    "monitoringDetails": {
+                        "interval": "5 seconds",
+                        "activeBuses": [
+                            "Shugondha A123",
+                            "Bkash B34",
+                            "Romjan R5"
+                        ]
+                    }
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Submit a Complaint",
+            "scenario": "A user encounters an issue with a bus service and wants to lodge a formal complaint",
+            "actors": "User,System",
+            "preconditions": "The user is logged into the BusTopia app or website",
+            "steps": [
+                "The user navigates to the 'Submit Complaint' section.",
+                "The user selects the bus route, bus number, or bus name related to the complaint.",
+                "The user fills in details of the complaint, such as time, date, issue type (e.g., delays, cleanliness, driver behavior), and a description.",
+                "The user submits the complaint.",
+                "The system acknowledges the submission and assigns a unique complaint ID."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Submit Complaint with Valid Data",
+                "TestScenario": " Verify that a user can successfully submit a complaint when all required information is provided.",
+                "steps": [
+                    "User logs in to the system.",
+                    "User navigates to the Complain page.",
+                    "User selects a bus service and fill in complaint details.",
+                    "User clicks Submit."
+                ],
+                "TestData": {
+                    "busServiceID": "Valid bus service ID",
+                    "complaintDetails": "Bus was delayed by 30 minutes",
+                    "date-time": "A valid date and time",
+                    "mediaFile": "Optional media file"
+                },
+                "expected": {
+                    "outcome": "Complaint is submitted successfully",
+                    "status": "Waiting for Response."
+                }
+            },
+            {
+                "name": "Submit Complaint with Invalid Bus Service ID.",
+                "TestScenario": "User tries to submit a complaint for a non-existent bus service.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to the 'Complain' page.",
+                    "Select a non-existent bus service.",
+                    "Attempt to submit the complaint."
+                ],
+                "TestData": {
+                    "busServiceID": "Invalid or non-existent ID",
+                    "complaintDetails": "Valid details",
+                    "date-time": "Valid date and time",
+                    "mediaFile": "Valid media file."
+                },
+                "ExpectedResult": "Error message alerts the user that the bus service does not exist."
+            },
+            {
+                "name": "Submit Complaint with Missing Fields.",
+                "TestScenario": "User tries to submit a complaint without filling required fields.",
+                "TestSteps": [
+                    "User logs in to the system.",
+                    "User navigates to the 'Complain' page.",
+                    "User attempts to submit the complaint form with one or more empty required fields."
+                ],
+                "TestData": {
+                    "busServiceID": "Missing",
+                    "complaintDetails": "Bus was delayed by 30 minutes",
+                    "date-time": "A valid date and time",
+                    "mediaFile": "Optional media file"
+                },
+                "ExpectedResult": "Error message is displayed, indicating which fields are required."
+            },
+            {
+                "name": "Submit Valid Media File Type.",
+                "TestScenario": "User attaches a media file to the complaint submission.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to the 'Complain' page.",
+                    "Fill in complaint details.",
+                    "Attach a media file.",
+                    "Click 'Submit.'"
+                ],
+                "TestData": {
+                    "busServiceID": "Valid bus service ID",
+                    "complaintDetails": "Valid details",
+                    "date-time": "A valid date and time",
+                    "mediaFile": "Supported file format (e.g., .jpg)"
+                },
+                "ExpectedResult": "Complaint is submitted successfully with the attached media."
+            },
+            {
+                "name": "Submit Invalid Media File Type.",
+                "TestScenario": "User receives a notification confirming complaint submission.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to the 'Complain' page.",
+                    "Fill in complaint details.",
+                    "Attach a media file.",
+                    "Click 'Submit.'"
+                ],
+                "TestData": {
+                    "busServiceID": "Valid bus service ID",
+                    "complaintDetails": "Valid details",
+                    "date-time": "A valid date and time",
+                    "mediaFile": "Unsupported file format (e.g., .java)"
+                },
+                "ExpectedResult": "Unsupported media type.Please attach a supported media type."
+            },
+            {
+                "name": "Filing a Duplicate Commplaint.",
+                "TestScenario": "User tries to submit a duplicate complaint for the same issue.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Submit a complaint for a specific bus service.",
+                    "Attempt to submit another complaint with the same details."
+                ],
+                "Prerequisites": "User has already submitted a complaint on the same issue.",
+                "TestData": {
+                    "busServiceID": "Duplicate bus service ID",
+                    "complaintDetails": "Duplicate details",
+                    "date-time": "Duplicate date and time",
+                    "mediaFile": "Duplicate media file."
+                },
+                "ExpectedResult": "System alerts the user that a complaint on this issue is already submitted."
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Track Complaint Status",
+            "scenario": " A user wants to check the status of a previously submitted complaint.",
+            "actors": "User,System",
+            "preconditions": [
+                "The user is logged into the BusTopia app or website",
+                "The user has submitted at least one complaint."
+            ],
+            "steps": [
+                "The user navigates to the 'Track Complaint Status' section.",
+                "The user either enters a complaint ID or accesses a list of previous complaints.",
+                "The system displays the current status (e.g., “Under Review,” “Resolved”) and any updates on the complaint."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Tracking a Complaint",
+                "TestScenario": "User tracks the status of a submitted complaint.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to 'My Complaints.'",
+                    "Select a complaint from the list to view its status."
+                ],
+                "Prerequisites": "User must have at least one submitted complaint.",
+                "TestData": {
+                    "complaintID": "Existing complaint ID",
+                    "complaintDetails": "Existing complaint details"
+                },
+                "ExpectedResult": {
+                    "complainStatus": "Pending/Acknowledged/Forwarded To support Team"
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Cancel a Complaint",
+            "scenario": "A user tries to cancel a complaint",
+            "actors": "User,System",
+            "preconditions": "The user is logged into the BusTopia app or website",
+            "steps": [
+                "The user navigates to the 'Track Complaint Status' section.",
+                "The user either enters a complaint ID or accesses a complaint from list of previous complaints.",
+                "The system displays Current Status the complaint.",
+                "The user views the complaint and selects 'Cancel'.",
+                "The system updates the complaint status to Cancelled."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Cancelling an Existing Complaint from list",
+                "TestScenario": "User cancels a complaint that is in 'Pending' status.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to 'My Complaints.'",
+                    "Select a pending complaint.",
+                    "Click 'Cancel.'"
+                ],
+                "Prerequisites": "User has submitted a complaint that is still pending.",
+                "TestData": {
+                    "complaintStatus": "Pending"
+                },
+                "ExpectedResult": "The complaint status changes to 'Cancelled,' and the complaint is no longer processed by the admin."
+            },
+            {
+                "name": "Cancelling an Existing Complaint Using Invalid ID",
+                "TestScenario": "User cancels a complaint that is in 'Pending' status.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to 'My Complaints.'",
+                    "Search a Complaint Using Complaint ID.",
+                    "Click 'Cancel.'"
+                ],
+                "Prerequisites": "User has submitted a complaint that is still pending.",
+                "TestData": {
+                    "complaintID": "An Invalid Complaint ID",
+                    "complaintStatus": "Pending"
+                },
+                "ExpectedResult": "An error message suggesting Complaint ID is Invalid."
+            },
+            {
+                "name": "Cancelling an Existing Complaint Using Valid ID",
+                "TestScenario": "User cancels a complaint that is in 'Pending' status.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to 'My Complaints.'",
+                    "Search a Complaint Using Complaint ID.",
+                    "Click 'Cancel.'"
+                ],
+                "Prerequisites": "User has submitted a complaint that is still pending.",
+                "TestData": {
+                    "complaintID": "A Valid Complaint ID",
+                    "complaintStatus": "Pending"
+                },
+                "ExpectedResult": "The complaint status changes to 'Cancelled,' and the complaint is no longer processed by the admin."
+            },
+            {
+                "name": "Cancelling a Complaint with Status 'Resolved'",
+                "TestScenario": "User cancels a complaint that is in 'Resolved' status.",
+                "TestSteps": [
+                    "Log in to the system.",
+                    "Navigate to 'My Complaints.'",
+                    "Search a Complaint from list or Using Complaint ID.",
+                    "Click 'Cancel.'"
+                ],
+                "Prerequisites": "User has submitted a complaint that is Resolved.",
+                "TestData": {
+                    "complaintStatus": "Resolved"
+                },
+                "ExpectedResult": "The complaint is already resolved and can't be cancelled."
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Escalate a Complaint",
+            "scenario": " A user is unsatisfied with the initial response and chooses to escalate the complaint for further review.",
+            "actors": "User,System, Customer Support",
+            "preconditions": [
+                "The user is logged into the BusTopia app or website",
+                "The user has received an initial resolution but is unsatisfied.",
+                "The complaint is within the timeframe for escalation."
+            ],
+            "steps": [
+                "The user navigates to the 'Track Complaint Status' section.",
+                "The user either enters a complaint ID or accesses a list of previous complaints.",
+                "The system displays response on the complaint.",
+                "The user views the complaint response and selects 'Escalate'.",
+                "The user provides additional information or reasons for escalation.",
+                "The system updates the complaint status to “Escalated.”"
+            ]
+        },
+        "testcases": [
+            {
+                "testCaseID": "escalating a Commplaint.",
+                "testScenario": "Verify the functionality of escalating a complaint.",
+                "testSteps": [
+                    "Log into the BusTopia app or website with valid credentials.",
+                    "Navigate to the 'Track Complaint Status' section.",
+                    "Enter a valid complaint ID or select a complaint from the list of previous complaints.",
+                    "View the initial response to the complaint.",
+                    "Select the 'Escalate' option.",
+                    "Provide additional information or reasons for escalation in the designated fields.",
+                    "Submit the escalation request."
+                ],
+                "prerequisites": [
+                    "User account is active and logged in.",
+                    "User has previously submitted a complaint.",
+                    "Complaint status allows for escalation (not closed or resolved)."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "complaintID": "C12345",
+                    "escalationReason": "Initial response did not resolve the issue satisfactorily."
+                },
+                "expectedResults": [
+                    "The system successfully displays the complaint details and the initial response.",
+                    "Upon submission, the system updates the complaint status to 'Escalated' and notifies the user."
+                ]
+            },
+            {
+                "testCaseID": "escalating an Unresolved Commplaint.",
+                "testScenario": "Verify the functionality of escalating a complaint.",
+                "testSteps": [
+                    "Log into the BusTopia app or website with valid credentials.",
+                    "Navigate to the 'Track Complaint Status' section.",
+                    "Enter a valid complaint ID or select a complaint from the list of previous complaints.",
+                    "Select the 'Escalate' option."
+                ],
+                "prerequisites": [
+                    "User account is active and logged in.",
+                    "User has previously submitted a complaint.",
+                    "Complaint status is not yet 'Resolved'."
+                ],
+                "testData": {
+                    "username": "user123",
+                    "password": "password123",
+                    "complaintID": "C12345",
+                    "escalationReason": "Initial response did not resolve the issue satisfactorily."
+                },
+                "expectedResults": [
+                    "The system displays error message suggesting user have to wait until complaint status is 'Resolved' the complaint details and the initial response."
+                ]
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "View Complaints",
+            "scenario": "An admin wants to view a list of complaints submitted by users regarding various bus services.",
+            "actors": "Admin",
+            "preconditions": "The admin is logged into the system with appropriate permissions.",
+            "steps": [
+                "The admin navigates to the Complaints Management section.",
+                "The admin selects View All Complaints.",
+                "The user fills in details of the complaint, such as time, date, issue type (e.g., delays, cleanliness, driver behavior), and a description.",
+                "The system displays a list of complaints, showing details like complaint ID, bus route, date, and complaint status.",
+                "The admin filters or sorts the complaints as needed."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Retrieving Complaints for a Specific Service.",
+                "TestScenario": "Admin successfully retrieves complaints for a specific bus service.",
+                "TestSteps": [
+                    "Log in as Admin.",
+                    "Navigate to the 'Complaints' section.",
+                    "Select a specific bus service to view complaints."
+                ],
+                "TestData": {
+                    "busServiceID": "Valid bus service ID"
+                },
+                "ExpectedResult": "A list of all complaints related to the specified bus service."
+            },
+            {
+                "name": "Filterig Complaints by Status/Time",
+                "TestScenario": "Admin applies filters to complaints (e.g., status, date range).",
+                "TestSteps": [
+                    "Log in as Admin.",
+                    "Navigate to the 'Complaints' section.",
+                    "Select filters such as complaint status or date range and apply them."
+                ],
+                "Prerequisites": "Complaints exist for various statuses and dates.",
+                "TestData": {
+                    "statusFilter": "Acknowledged",
+                    "dateRange": "Last 3 days"
+                },
+                "ExpectedResult": "Only complaints matching the specified filters are displayed."
+            },
+            {
+                "name": "Filtering Complaints Using Invalid Data for Filtering.",
+                "TestScenario": "Admin attempts to find complaints for a non-existent bus service.",
+                "TestSteps": [
+                    "Log in as Admin.",
+                    "Navigate to the 'Complaints' section.",
+                    "Search for complaints related to a non-existent bus service."
+                ],
+                "TestData": {
+                    "busServiceID": "Invalid bus service ID"
+                },
+                "ExpectedResult": "System displays an error or a message indicating no complaints found for the specified service."
+            },
+            {
+                "name": "Viewing Detailed Information of a Complaint",
+                "TestScenario": "Admin views detailed information for a specific complaint.",
+                "TestSteps": [
+                    "Log in as Admin.",
+                    "Navigate to the 'Complaints' section.",
+                    "Click on a complaint to view its details."
+                ],
+                "Prerequisites": "Complaints exist for selected bus services.",
+                "TestData": {
+                    "complaintID": "Existing complaint ID"
+                },
+                "ExpectedResult": {
+                    "busServiceID": "A valid ID",
+                    "complaintDetails": "Valid details",
+                    "date-time": "Valid date and time",
+                    "mediaFile": "Valid media file."
+                }
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Assign Complaint to Support Team",
+            "scenario": "An admin assigns a complaint to a relevant support team for resolution.",
+            "actors": "Admin, Support Team",
+            "preconditions": [
+                "The admin is logged into the system with appropriate permissions.",
+                "A complaint exists and has been acknowledged or reviewed."
+            ],
+            "steps": [
+                "The admin navigates to the list of complaints.",
+                "The admin views the details of a specific complaint.",
+                "The admin selects the option to assign the complaint.",
+                "The admin chooses a support team or agent from the list.",
+                "The system assigns the complaint to the selected team or agent and notifies them."
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Processing a Complaint.",
+                "TestScenario": "Admin acknowledges a complaint and assigns it to the support team.",
+                "TestSteps": [
+                    "Log in as Admin.",
+                    "Navigate to the 'Complaints' section.",
+                    "Select a complaint to acknowledge.",
+                    "Assign the complaint to a support team member."
+                ],
+                "Prerequisites": "Complaint has 'Pending' status.",
+                "TestData": {
+                    "complaintID": "Pending complaint ID",
+                    "assignedTo": "SupportTeamMemberID"
+                },
+                "ExpectedResult": "Complaint status updates to 'Acknowledged' and is assigned to the specified support team member."
+            }
+        ]
+    },
+    {
+        "usecase": {
+            "name": "Acknowledge a Complaint",
+            "scenario": " An admin reviews a complaint and sends an acknowledgment to the user to confirm receipt.",
+            "actors": "Admin",
+            "preconditions": "The admin is logged into the system with appropriate permissions.",
+            "steps": [
+                "The admin navigates to the list of complaints.",
+                "The admin selects a specific complaint to review.",
+                "The admin clicks on the “Acknowledge” button.",
+                "The system sends an acknowledgment notification to the user.",
+                "The complaint status updates to “Acknowledged.”"
+            ]
+        },
+        "testcases": [
+            {
+                "name": "Changing Complaint Status.",
+                "TestScenario": "Admin changes the status of a complaint.",
+                "TestSteps": [
+                    "Log in as Admin.",
+                    "Navigate to the 'Complaints' section.",
+                    "Select a complaint with 'Acknowledged' status.",
+                    "Change its status to 'Resolved.'"
+                ],
+                "Prerequisites": "complaint has 'Acknowledged' status.",
+                "TestData": {
+                    "complaintID": "Acknowledged complaint ID",
+                    "newStatus": "Resolved"
+                },
+                "ExpectedResult": "Complaint status updates to 'Resolved,' and the user is notified."
+            },
+            {
+                "name": "Receiving notification for Newly Submitted Complaints.",
+                "TestScenario": "Admin receives a notification when a new complaint is submitted for a  bus service.",
+                "TestSteps": [
+                    "Log in as Admin.",
+                    "User submits a complaint for the bus service."
+                ],
+                "Prerequisites": "Notifications are enabled for the relevant bus service.",
+                "TestData": {
+                    "busServiceID": "valid bus service ID",
+                    "complaintDetails": "Valid details",
+                    "date-time": "Valid date and time",
+                    "mediaFile": "Valid media file."
+                },
+                "ExpectedResult": "Admin receives a notification for the new complaint submitted."
+            }
+        ]
+    }
+]
